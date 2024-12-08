@@ -1,13 +1,13 @@
 package SportRadar.CodingExercise;
 
 import org.jmock.*;
-import org.junit.Assert;
-
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
 public class IWorldCupHandlerTest {
+
+    private Mockery context;
 
     private WorldCupHandler _worldCupHandler;
 
@@ -15,10 +15,10 @@ public class IWorldCupHandlerTest {
     private IMatch _match;
     private ITeam _team;
 
-    private Mockery context = new Mockery();
 
     @org.testng.annotations.BeforeMethod
     public void setUp() {
+        context = new Mockery();
         _worldCupService = context.mock(IWorldCupService.class);
         _match = context.mock(IMatch.class);
         _team = context.mock(ITeam.class);
