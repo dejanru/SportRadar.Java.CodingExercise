@@ -48,4 +48,9 @@ implements IWorldCupService{
 
         return _runningMatches;
     }
+
+    @Override
+    public ArrayList<IMatch> finishMatch(String homeTeam, String awayTeam) {
+        return null;
+    }
 }

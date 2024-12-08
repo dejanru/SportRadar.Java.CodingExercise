@@ -17,8 +17,8 @@ public class Match implements IMatch {
         _homeTeam = new Team(homeTeam);
         _awayTeam = new Team(awayTeam);
         _createdAt_ticks = Calendar.getInstance().getTimeInMillis();;
-        _homeTeam.setScore(0);
-        _awayTeam.setScore(0);
+        _homeTeam.setScore(homeTeamScore);
+        _awayTeam.setScore(awayTeamScore);
     }
 
     @Override
