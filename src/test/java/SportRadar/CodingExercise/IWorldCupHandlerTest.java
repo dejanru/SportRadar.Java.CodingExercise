@@ -142,6 +142,41 @@ public class IWorldCupHandlerTest {
     @org.testng.annotations.Test
     public void testFinishMatch()
     {
+        Match data1 = new Match("Austria", "Germany");
+        Match data2 = new Match("Slovenia", "Italy");
+        Match data3 = new Match("France", "England");
+        ArrayList<IMatch> runningMatches = new ArrayList();
+        ArrayList<IMatch> archiveMatches = new ArrayList();
+        runningMatches.add(data1);
+        runningMatches.add(data2);
+        runningMatches.add(data3);
 
+        // finish match2
+
+        WorldCupMatches worldCupMatches = new WorldCupMatches();
+        worldCupMatches._runningMatches = new ArrayList();
+        worldCupMatches._runningMatches.add(data1);
+        worldCupMatches._runningMatches.add(data3);
+        worldCupMatches._finishedMatches = new ArrayList();
+        worldCupMatches._finishedMatches.add(data2);
+
+        context.checking(new Expectations() {{
+            oneOf(_worldCupService).getRunningMatches();
+            will(returnValue(runningMatches));
+
+            oneOf(_worldCupService).finishMatch("Slovenia", "Italy");
+            will(returnValue(worldCupMatches));
+        }});
+
+        // Invoke
+        ArrayList<IMatch> matchesOnStart = _worldCupHandler.getRunningMatches();
+        assertEquals(3, runningMatches.size());
+        assertEquals(0, archiveMatches.size());
+
+        WorldCupMatches currentMatches = _worldCupHandler.finishMatch("Slovenia", "Italy");
+        assertEquals(2, currentMatches._runningMatches.size());
+        assertEquals(1, currentMatches._finishedMatches.size());
+
+        context.assertIsSatisfied();
     }
 }

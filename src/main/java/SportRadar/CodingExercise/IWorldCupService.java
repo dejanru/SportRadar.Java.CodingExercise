@@ -7,5 +7,5 @@ public interface IWorldCupService {
     ArrayList<IMatch> getArchiveMatches();
     ArrayList<IMatch> startNewMatch(String homeTeam, String awayTeam);
     ArrayList<IMatch> updateScore(String homeTeam, String awayTeam, int homeScore, int awayScore);
-    ArrayList<IMatch> finishMatch(String homeTeam, String awayTeam);
+    WorldCupMatches finishMatch(String homeTeam, String awayTeam);
 }

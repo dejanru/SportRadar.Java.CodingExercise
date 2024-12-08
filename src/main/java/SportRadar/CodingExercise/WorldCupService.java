@@ -50,7 +50,24 @@ implements IWorldCupService{
     }
 
     @Override
-    public ArrayList<IMatch> finishMatch(String homeTeam, String awayTeam) {
-        return null;
+    public WorldCupMatches finishMatch(String homeTeam, String awayTeam) {
+        IMatch match = _runningMatches.stream()
+                .filter(f -> f.awayTeam().getName() == awayTeam &&
+                        f.homeTeam().getName() == homeTeam)
+                .findFirst()
+                .get();
+        if (match == null)
+        {
+            throw  new RuntimeException("Match not found");
+        }
+
+        _runningMatches.remove(match);
+        _archiveMatches.add(match);
+
+        WorldCupMatches matches = new WorldCupMatches();
+        matches._finishedMatches = _archiveMatches;
+        matches._runningMatches = _runningMatches;
+
+        return matches;
     }
 }

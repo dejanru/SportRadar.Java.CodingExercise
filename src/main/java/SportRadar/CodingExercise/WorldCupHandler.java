@@ -32,6 +32,6 @@ public class WorldCupHandler implements IWorldCupHandler {
 
     @Override
     public WorldCupMatches finishMatch(String homeTeam, String awayTeam) {
-        return new WorldCupMatches();
+        return _worldCupService.finishMatch(homeTeam, awayTeam);
     }
 }
