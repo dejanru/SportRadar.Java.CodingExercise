@@ -16,23 +16,32 @@ public class Match implements IMatch {
     public Match(String homeTeam, String awayTeam, int homeTeamScore, int awayTeamScore) {
         _homeTeam = new Team(homeTeam);
         _awayTeam = new Team(awayTeam);
-        _createdAt_ticks = Calendar.getInstance().getTimeInMillis();;
+        _createdAt_ticks = Calendar.getInstance().getTimeInMillis();
         _homeTeam.setScore(homeTeamScore);
         _awayTeam.setScore(awayTeamScore);
     }
 
     @Override
     public ITeam homeTeam() {
-        return null;
+        return _homeTeam;
     }
 
     @Override
     public ITeam awayTeam() {
-        return null;
+        return _awayTeam;
     }
 
     @Override
     public long createdAt_ticks() {
-        return 0;
+        return _createdAt_ticks;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "createdDate=" + _createdAt_ticks +
+                ", homeTeam='" + _homeTeam.getName() + '\'' +
+                ", awayTeam=" + _awayTeam.getName() +
+                '}';
     }
 }

@@ -1,6 +1,8 @@
 package SportRadar.CodingExercise;
 
 import org.jmock.*;
+
+import static java.lang.Thread.sleep;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -154,11 +156,13 @@ public class IWorldCupHandlerTest {
         // finish match2
 
         WorldCupMatches worldCupMatches = new WorldCupMatches();
-        worldCupMatches._runningMatches = new ArrayList();
-        worldCupMatches._runningMatches.add(data1);
-        worldCupMatches._runningMatches.add(data3);
-        worldCupMatches._finishedMatches = new ArrayList();
-        worldCupMatches._finishedMatches.add(data2);
+        ArrayList<IMatch> runningMatches_after = new ArrayList();
+        runningMatches_after.add(data1);
+        runningMatches_after.add(data3);
+        worldCupMatches. set_runningMatches(runningMatches_after);
+        ArrayList<IMatch> finishedMatches_after = new ArrayList();
+        finishedMatches_after.add(data2);
+        worldCupMatches.set_finishedMatches(finishedMatches_after);
 
         context.checking(new Expectations() {{
             oneOf(_worldCupService).getRunningMatches();
@@ -173,10 +177,70 @@ public class IWorldCupHandlerTest {
         assertEquals(3, runningMatches.size());
         assertEquals(0, archiveMatches.size());
 
-        WorldCupMatches currentMatches = _worldCupHandler.finishMatch("Slovenia", "Italy");
-        assertEquals(2, currentMatches._runningMatches.size());
-        assertEquals(1, currentMatches._finishedMatches.size());
+        IWorldCupMatches currentMatches = _worldCupHandler.finishMatch("Slovenia", "Italy");
+        assertEquals(2, currentMatches.get_runningMatches().size());
+        assertEquals(1, currentMatches.get_finishedMatches().size());
 
         context.assertIsSatisfied();
+    }
+
+    @org.testng.annotations.Test
+    public void testSummaryOfMatches()
+    {
+        // NOTE : thread sleeep introduced to be able to have a big difference in ticks timestamp
+        Match data1 = new Match("Mexico", "Canada", 0, 5);
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        Match data2 = new Match("Spain", "Brazil", 10, 2);
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        Match data3 = new Match("Germany", "France", 2,2);
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        Match data4 = new Match("Uruguay", "Italy", 6,6);
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        Match data5 = new Match("Argentina", "Australia", 3,1);
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        ArrayList<IMatch> runningMatches = new ArrayList();
+        runningMatches.add(data1);
+        runningMatches.add(data2);
+        runningMatches.add(data3);
+        runningMatches.add(data4);
+        runningMatches.add(data5);
+
+        context.checking(new Expectations() {{
+            oneOf(_worldCupService).getRunningMatches();
+            will(returnValue(runningMatches));
+        }});
+
+        ArrayList<IMatchSummary> result = _worldCupHandler.getSummaryOfMatches();
+
+        assertEquals(5, runningMatches.size());
+        assertEquals(5, result.size());
+        assertEquals("Uruguay", result.get(0).get_Match().homeTeam().getName());
+        assertEquals("Spain", result.get(1).get_Match().homeTeam().getName());
+        assertEquals("Mexico", result.get(2).get_Match().homeTeam().getName());
+        assertEquals("Argentina", result.get(3).get_Match().homeTeam().getName());
+        assertEquals("Germany", result.get(4).get_Match().homeTeam().getName());
+
+        context.assertIsSatisfied();
+
     }
 }

@@ -7,6 +7,7 @@ public interface IWorldCupHandler {
     ArrayList<IMatch> getArchiveMatches();
     ArrayList<IMatch> startNewMatch(String homeTeam, String awayTeam);
     ArrayList<IMatch> updateScore(String homeTeam, String awayTeam, int homeScore, int awayScore);
-    WorldCupMatches finishMatch(String homeTeam, String awayTeam);
+    IWorldCupMatches finishMatch(String homeTeam, String awayTeam);
+    ArrayList<IMatchSummary> getSummaryOfMatches();
 }
 

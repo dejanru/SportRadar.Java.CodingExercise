@@ -65,8 +65,8 @@ implements IWorldCupService{
         _archiveMatches.add(match);
 
         WorldCupMatches matches = new WorldCupMatches();
-        matches._finishedMatches = _archiveMatches;
-        matches._runningMatches = _runningMatches;
+        matches.set_finishedMatches(_archiveMatches);
+        matches.set_runningMatches(_runningMatches);
 
         return matches;
     }

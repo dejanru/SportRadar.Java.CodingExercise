@@ -1,6 +1,13 @@
 package SportRadar.CodingExercise;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.SortedMap;
+import java.util.stream.Collectors;
+
+import static java.util.Comparator.comparing;
 
 public class WorldCupHandler implements IWorldCupHandler {
     private IWorldCupService _worldCupService;
@@ -31,7 +38,46 @@ public class WorldCupHandler implements IWorldCupHandler {
     }
 
     @Override
-    public WorldCupMatches finishMatch(String homeTeam, String awayTeam) {
+    public IWorldCupMatches finishMatch(String homeTeam, String awayTeam) {
         return _worldCupService.finishMatch(homeTeam, awayTeam);
+    }
+
+    @Override
+    public ArrayList<IMatchSummary> getSummaryOfMatches() {
+        Comparator<IMatch> comparator = Comparator.comparingLong(IMatch::createdAt_ticks);
+        Comparator<IMatch> reversedComparator = comparator.reversed();
+        ArrayList<IMatch> matches = _worldCupService.getRunningMatches();
+
+        matches.sort(Comparator.comparing(IMatch::createdAt_ticks).reversed());
+
+        ArrayList<IMatchSummary> results = new ArrayList<>();
+        IMatchSummary summary;
+
+//        List<IMatch> result_fw = matches.stream()
+//                .sorted(comparator)
+//                .collect(Collectors.toList());
+//        List<IMatch> result_rev = matches.stream()
+//                .sorted(reversedComparator)
+//                .collect(Collectors.toList());
+
+        for (IMatch item : matches) {
+            System.out.println(item.toString());
+            int homeScore = item.homeTeam().getScore();
+            int awayScore = item.awayTeam().getScore();
+            summary = new MatchSummary();
+            summary.set_SumScore(homeScore + awayScore);
+            summary.set_created_ticks(item.createdAt_ticks());
+            summary.set_Match(item);
+            results.add(summary);
+        }
+
+        results.sort(Comparator.comparing(IMatchSummary::get_SumScore)
+                            .thenComparing(IMatchSummary::get_created_ticks).reversed());
+
+        for (IMatchSummary item : results) {
+            System.out.println(item.toString());
+        }
+
+        return results;
     }
 }
