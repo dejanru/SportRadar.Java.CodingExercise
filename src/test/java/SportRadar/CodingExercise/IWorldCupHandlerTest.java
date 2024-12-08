@@ -78,7 +78,7 @@ public class IWorldCupHandlerTest {
     }
 
     @org.testng.annotations.Test
-    public void testStartNewMatch() {
+    public void testStartNewMatch() throws Exception {
         // empty result
         ArrayList<IMatch> matches = new ArrayList();
         // result after added match
@@ -142,8 +142,7 @@ public class IWorldCupHandlerTest {
     }
 
     @org.testng.annotations.Test
-    public void testFinishMatch()
-    {
+    public void testFinishMatch() throws Exception {
         Match data1 = new Match("Austria", "Germany");
         Match data2 = new Match("Slovenia", "Italy");
         Match data3 = new Match("France", "England");

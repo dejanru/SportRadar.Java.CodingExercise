@@ -1,13 +1,7 @@
 package SportRadar.CodingExercise;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
-import java.util.SortedMap;
-import java.util.stream.Collectors;
-
-import static java.util.Comparator.comparing;
 
 public class WorldCupHandler implements IWorldCupHandler {
     private IWorldCupService _worldCupService;
@@ -27,7 +21,7 @@ public class WorldCupHandler implements IWorldCupHandler {
     }
 
     @Override
-    public ArrayList<IMatch> startNewMatch(String homeTeam, String awayTeam) {
+    public ArrayList<IMatch> startNewMatch(String homeTeam, String awayTeam) throws Exception {
 
         return _worldCupService.startNewMatch(homeTeam, awayTeam);
     }
@@ -38,7 +32,7 @@ public class WorldCupHandler implements IWorldCupHandler {
     }
 
     @Override
-    public IWorldCupMatches finishMatch(String homeTeam, String awayTeam) {
+    public IWorldCupMatches finishMatch(String homeTeam, String awayTeam) throws Exception {
         return _worldCupService.finishMatch(homeTeam, awayTeam);
     }
 
