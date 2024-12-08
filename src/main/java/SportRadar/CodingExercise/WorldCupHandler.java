@@ -53,15 +53,8 @@ public class WorldCupHandler implements IWorldCupHandler {
         ArrayList<IMatchSummary> results = new ArrayList<>();
         IMatchSummary summary;
 
-//        List<IMatch> result_fw = matches.stream()
-//                .sorted(comparator)
-//                .collect(Collectors.toList());
-//        List<IMatch> result_rev = matches.stream()
-//                .sorted(reversedComparator)
-//                .collect(Collectors.toList());
-
         for (IMatch item : matches) {
-            System.out.println(item.toString());
+//            System.out.println(item.toString());
             int homeScore = item.homeTeam().getScore();
             int awayScore = item.awayTeam().getScore();
             summary = new MatchSummary();
@@ -74,9 +67,9 @@ public class WorldCupHandler implements IWorldCupHandler {
         results.sort(Comparator.comparing(IMatchSummary::get_SumScore)
                             .thenComparing(IMatchSummary::get_created_ticks).reversed());
 
-        for (IMatchSummary item : results) {
-            System.out.println(item.toString());
-        }
+//        for (IMatchSummary item : results) {
+//            System.out.println(item.toString());
+//        }
 
         return results;
     }
