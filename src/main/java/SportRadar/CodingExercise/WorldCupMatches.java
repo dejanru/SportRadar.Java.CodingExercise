@@ -10,11 +10,6 @@ public class WorldCupMatches implements IWorldCupMatches{
 
     }
 
-    public WorldCupMatches(ArrayList<IMatch> runningMatches, ArrayList<IMatch> finishedMatches) {
-        _runningMatches = runningMatches;
-        _finishedMatches = finishedMatches;
-    }
-
     public void set_finishedMatches(ArrayList<IMatch> _finishedMatches) {
         this._finishedMatches = _finishedMatches;
     }

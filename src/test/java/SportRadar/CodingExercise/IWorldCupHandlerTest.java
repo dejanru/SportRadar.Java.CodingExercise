@@ -2,7 +2,6 @@ package SportRadar.CodingExercise;
 
 import org.jmock.*;
 
-import static java.lang.Thread.sleep;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -14,16 +13,14 @@ public class IWorldCupHandlerTest {
     private WorldCupHandler _worldCupHandler;
 
     private IWorldCupService _worldCupService;
-    private IMatch _match;
-    private ITeam _team;
 
 
     @org.testng.annotations.BeforeMethod
     public void setUp() {
         context = new Mockery();
         _worldCupService = context.mock(IWorldCupService.class);
-        _match = context.mock(IMatch.class);
-        _team = context.mock(ITeam.class);
+        IMatch _match = context.mock(IMatch.class);
+        ITeam _team = context.mock(ITeam.class);
 
         _worldCupHandler = new WorldCupHandler(_worldCupService, _match, _team);
     }
@@ -39,7 +36,7 @@ public class IWorldCupHandlerTest {
         Match data1 = new Match("Austria", "Germany");
         Match data2 = new Match("Slovenia", "Italy");
 
-        ArrayList<IMatch> matches = new ArrayList();
+        ArrayList<IMatch> matches = new ArrayList<>();
         matches.add(data1);
         matches.add(data2);
 
@@ -62,7 +59,7 @@ public class IWorldCupHandlerTest {
         Match data1 = new Match("Austria", "Germany");
         Match data2 = new Match("Slovenia", "Italy");
 
-        ArrayList<IMatch> matches = new ArrayList();
+        ArrayList<IMatch> matches = new ArrayList<>();
         matches.add(data1);
         matches.add(data2);
 
@@ -80,10 +77,10 @@ public class IWorldCupHandlerTest {
     @org.testng.annotations.Test
     public void testStartNewMatch() throws Exception {
         // empty result
-        ArrayList<IMatch> matches = new ArrayList();
+        ArrayList<IMatch> matches = new ArrayList<>();
         // result after added match
         Match data1 = new Match("Austria", "Germany");
-        ArrayList<IMatch> matchesAfterStart = new ArrayList();
+        ArrayList<IMatch> matchesAfterStart = new ArrayList<>();
         matchesAfterStart.add(data1);
 
         context.checking(new Expectations() {{
@@ -112,12 +109,12 @@ public class IWorldCupHandlerTest {
         Match data1 = new Match("Austria", "Germany");
         Match data2 = new Match("Slovenia", "Italy");
         Match data3 = new Match("France", "England");
-        ArrayList<IMatch> matches = new ArrayList();
+        ArrayList<IMatch> matches = new ArrayList<>();
         matches.add(data1);
         matches.add(data2);
         matches.add(data3);
 
-        ArrayList<IMatch> updatedMatches = new ArrayList(matches);
+        ArrayList<IMatch> updatedMatches = new ArrayList<>(matches);
         Match updatedData = new Match("Slovenia", "Italy", 0, 2);
         updatedMatches.set(1, updatedData);
 
@@ -146,8 +143,7 @@ public class IWorldCupHandlerTest {
         Match data1 = new Match("Austria", "Germany");
         Match data2 = new Match("Slovenia", "Italy");
         Match data3 = new Match("France", "England");
-        ArrayList<IMatch> runningMatches = new ArrayList();
-        ArrayList<IMatch> archiveMatches = new ArrayList();
+        ArrayList<IMatch> runningMatches = new ArrayList<>();
         runningMatches.add(data1);
         runningMatches.add(data2);
         runningMatches.add(data3);
@@ -155,11 +151,11 @@ public class IWorldCupHandlerTest {
         // finish match2
 
         WorldCupMatches worldCupMatches = new WorldCupMatches();
-        ArrayList<IMatch> runningMatches_after = new ArrayList();
+        ArrayList<IMatch> runningMatches_after = new ArrayList<>();
         runningMatches_after.add(data1);
         runningMatches_after.add(data3);
         worldCupMatches. set_runningMatches(runningMatches_after);
-        ArrayList<IMatch> finishedMatches_after = new ArrayList();
+        ArrayList<IMatch> finishedMatches_after = new ArrayList<>();
         finishedMatches_after.add(data2);
         worldCupMatches.set_finishedMatches(finishedMatches_after);
 
@@ -169,24 +165,28 @@ public class IWorldCupHandlerTest {
 
             oneOf(_worldCupService).finishMatch("Slovenia", "Italy");
             will(returnValue(worldCupMatches));
+
+            oneOf(_worldCupService).getArchiveMatches();
+            will(returnValue(finishedMatches_after));
         }});
 
         // Invoke
         ArrayList<IMatch> matchesOnStart = _worldCupHandler.getRunningMatches();
-        assertEquals(3, runningMatches.size());
-        assertEquals(0, archiveMatches.size());
+        assertEquals(3, matchesOnStart.size());
 
         IWorldCupMatches currentMatches = _worldCupHandler.finishMatch("Slovenia", "Italy");
         assertEquals(2, currentMatches.get_runningMatches().size());
         assertEquals(1, currentMatches.get_finishedMatches().size());
 
+        ArrayList<IMatch> finishedMatches = _worldCupHandler.getArchiveMatches();
+        assertEquals(1, finishedMatches.size());
         context.assertIsSatisfied();
     }
 
     @org.testng.annotations.Test
     public void testSummaryOfMatches()
     {
-        // NOTE : thread sleeep introduced to be able to have a big difference in ticks timestamp
+        // NOTE : thread sleep introduced to be able to have a big difference in ticks timestamp
         Match data1 = new Match("Mexico", "Canada", 0, 5);
         try {
             Thread.sleep(200);
@@ -217,7 +217,7 @@ public class IWorldCupHandlerTest {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        ArrayList<IMatch> runningMatches = new ArrayList();
+        ArrayList<IMatch> runningMatches = new ArrayList<>();
         runningMatches.add(data1);
         runningMatches.add(data2);
         runningMatches.add(data3);

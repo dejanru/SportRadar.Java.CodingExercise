@@ -3,9 +3,9 @@ package SportRadar.CodingExercise;
 import java.util.*;
 
 public class Match implements IMatch {
-    private ITeam _homeTeam;
-    private ITeam _awayTeam;
-    private long _createdAt_ticks;
+    private final ITeam _homeTeam;
+    private final ITeam _awayTeam;
+    private final long _createdAt_ticks;
 
     public Match(String homeTeamName, String awayTeamName) {
         _homeTeam = new Team(homeTeamName) ;

@@ -19,7 +19,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("Enter a number between 1 and 5: ");
+            System.out.println("Enter a number between 0 and 6: ");
             System.out.println("1 : Get current state (running matches and archive matches)");
             System.out.println("2 : Start new match");
             System.out.println("3 : Update score for existing match");
@@ -46,15 +46,15 @@ public class Main {
                         GetCurrentState(worldCupHandler);
                         break;
                     case 2:
-                        System.out.printf("enter Home team name: ");
+                        System.out.print("enter Home team name: ");
                         String homeTeamName = scanner.next();
-                        System.out.printf("enter Away team name: ");
+                        System.out.print("enter Away team name: ");
                         String awayTeamName = scanner.next();
 
                         worldCupHandler.startNewMatch(homeTeamName, awayTeamName);
                         break;
                     case 3:
-                        System.out.printf("select existing match: ");
+                        System.out.print("select existing match: ");
                         ArrayList<IMatch> runningMatches = worldCupHandler.getRunningMatches();
                         System.out.printf("---------------------------------------------------------%n");
                         System.out.printf("Running matches: %d %n", runningMatches.size());
@@ -110,7 +110,7 @@ public class Main {
     }
 
     private static IMatch GetRunningMatch(IWorldCupHandler worldCupHandler, Scanner scanner) {
-        System.out.printf("select existing match: ");
+        System.out.print("select existing match: ");
         ArrayList<IMatch> runningMatches = worldCupHandler.getRunningMatches();
         System.out.printf("---------------------------------------------------------%n");
         System.out.printf("Running matches: %d %n", runningMatches.size());
@@ -120,8 +120,8 @@ public class Main {
             cnt++;
         }
         int m = scanner.nextInt();
-        IMatch result = runningMatches.get(m);
-        return result;
+
+        return runningMatches.get(m);
     }
 
     public static void GetCurrentState(IWorldCupHandler worldCupHandler) {

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class WorldCupService
 implements IWorldCupService{
-    private ArrayList<IMatch> _runningMatches;
-    private ArrayList<IMatch> _archiveMatches;
+    private final ArrayList<IMatch> _runningMatches;
+    private final ArrayList<IMatch> _archiveMatches;
 
     public WorldCupService() {
         _runningMatches = new ArrayList<>();
@@ -35,10 +35,10 @@ implements IWorldCupService{
         if (!matchAlreadyExists)
         {
             if (homeTeamAlreadyPlays ){
-                throw new Exception("Team "+ homeTeam +" already playes match in progress.");
+                throw new Exception("Team "+ homeTeam +" already plays match in progress.");
             }
             if (awayTeamAlreadyPlays){
-                throw new Exception("Team "+ awayTeam +" already playes match in progress.");
+                throw new Exception("Team "+ awayTeam +" already plays match in progress.");
             }
             IMatch newMatch = new Match(homeTeam, awayTeam);
             _runningMatches.add(newMatch);
@@ -58,7 +58,7 @@ implements IWorldCupService{
                             .findFirst()
                             .get();
 
-        if (match == null)
+        if (match.equals(null))
         {
             throw new RuntimeException("No running match between " + homeTeam + " and " + awayTeam);
         }

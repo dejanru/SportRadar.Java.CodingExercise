@@ -14,12 +14,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.testng/testng -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>RELEASE</version>
+            <version>7.10.2</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.jmock</groupId>
             <artifactId>jmock-junit5</artifactId>
@@ -29,7 +31,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>4.13.1</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -37,10 +39,12 @@
             <version>5.2.0</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.junit/junit-bom -->
         <dependency>
             <groupId>org.junit</groupId>
             <artifactId>junit-bom</artifactId>
-            <version>5.11.0-M1</version>
+            <version>5.11.0</version>
+            <type>pom</type>
             <scope>test</scope>
         </dependency>
     </dependencies>

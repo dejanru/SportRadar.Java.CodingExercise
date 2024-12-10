@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class WorldCupHandler implements IWorldCupHandler {
-    private IWorldCupService _worldCupService;
+    private final IWorldCupService _worldCupService;
 
     public WorldCupHandler(IWorldCupService worldCupService, IMatch match, ITeam team) {
         _worldCupService = worldCupService;
@@ -38,8 +38,6 @@ public class WorldCupHandler implements IWorldCupHandler {
 
     @Override
     public ArrayList<IMatchSummary> getSummaryOfMatches() {
-        Comparator<IMatch> comparator = Comparator.comparingLong(IMatch::createdAt_ticks);
-        Comparator<IMatch> reversedComparator = comparator.reversed();
         ArrayList<IMatch> matches = _worldCupService.getRunningMatches();
 
         matches.sort(Comparator.comparing(IMatch::createdAt_ticks).reversed());
@@ -48,7 +46,6 @@ public class WorldCupHandler implements IWorldCupHandler {
         IMatchSummary summary;
 
         for (IMatch item : matches) {
-//            System.out.println(item.toString());
             int homeScore = item.homeTeam().getScore();
             int awayScore = item.awayTeam().getScore();
             summary = new MatchSummary();
@@ -61,9 +58,6 @@ public class WorldCupHandler implements IWorldCupHandler {
         results.sort(Comparator.comparing(IMatchSummary::get_SumScore)
                             .thenComparing(IMatchSummary::get_created_ticks).reversed());
 
-//        for (IMatchSummary item : results) {
-//            System.out.println(item.toString());
-//        }
 
         return results;
     }
